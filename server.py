@@ -18,7 +18,7 @@ AWESOMENESS = [
 def start_here():
     """Home page."""
 
-    return "<!doctype html><html>Hi! This is the home page.</html>"
+    return "<!doctype html><html>Hi! This is the home page.<a href='/hello'> hello</a></html>"
 
 
 @app.route('/hello')
@@ -35,8 +35,34 @@ def say_hello():
         <h1>Hi There!</h1>
         <form action="/greet">
           What's your name? <input type="text" name="person">
+          <br />
+          What compliment would you like? <select name="compliment" id="compliment">
+          <option value='awesome'>awesome</option>
+          <option value='terrific'>terrific</option>
+          <option value='fantastic'>fantastic</option>
+          <option value='fantabulous'>fantabulous</option>
+          <option value='neato'>neato</option>
+          <option value='wowza'>wowza</option>
+          <option value='oh-so-not-meh'>oh-so-not-meh</option>
+          <option value='brilliant'>brilliant</option>
+          <option value='ducky'>ducky</option>
+          <option value='coolio'>coolio</option>
+          <option value='incredible'>incredible</option>
+          <option value='wonderful'>wonderful</option>
+          <option value='smashing'>smashing</option>
+          <option value='lovely'>lovely</option>
+          </select>
           <input type="submit" value="Submit">
         </form>
+        <form action ="/diss">
+        What's your name? <input type="text" name="person">
+        <br>
+        What diss would you like? <select name="diss" id="diss">
+        <option value='could be better'>could be better</option>
+        <option value='smelly'>smelly</option>
+        <option value='stinky'>stinky</option>
+        </select>
+        <input type="submit" value="Submit">
       </body>
     </html>
     """
@@ -48,8 +74,8 @@ def greet_person():
 
     player = request.args.get("person")
 
-    compliment = choice(AWESOMENESS)
-
+    compliment = request.args.get("compliment")
+    # y = x
     return f"""
     <!doctype html>
     <html>
@@ -62,6 +88,24 @@ def greet_person():
     </html>
     """
 
+@app.route('/diss')
+def diss_person():
+    """Get user by name."""
+
+    player = request.args.get("person")
+
+    diss = request.args.get("diss")
+    return f"""
+    <!doctype html>
+    <html>
+      <head>
+        <title>A Diss</title>
+      </head>
+      <body>
+        Hi, {player}! I think you're {diss}!
+      </body>
+    </html>
+    """
 
 if __name__ == '__main__':
     # debug=True gives us error messages in the browser and also "reloads"
